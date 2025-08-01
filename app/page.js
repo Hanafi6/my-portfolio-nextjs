@@ -8,17 +8,12 @@ import Homesection from "../components/Home";
 import { useEffect, useState } from "react";
 import useNavStore from "@/zustand/navStore";
 
-
-
-// const sections = [<Homesection />, <Skills />, <Projects />, <Contact />];
-
 const sections = {
   home: <Homesection />,
   skills: <Skills />,
   projects: <Projects />,
   contact: <Contact />
 };
-
 
 export default function Home() {
   const { activeSection } = useNavStore();
@@ -31,10 +26,9 @@ export default function Home() {
   return (
     <>
       <Sidebar />
-      <MainContent  >
+      <MainContent>
         {section}
       </MainContent>
-
     </>
   );
 }
