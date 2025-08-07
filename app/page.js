@@ -8,6 +8,7 @@ import Homesection from "../components/Home";
 import { useEffect, useState } from "react";
 import useNavStore from "@/zustand/navStore";
 
+
 const sections = {
   home: <Homesection />,
   skills: <Skills />,
@@ -16,11 +17,14 @@ const sections = {
 };
 
 export default function Home() {
-  const { activeSection } = useNavStore();
+  const { activeSection,changeSection } = useNavStore();
   const [section, setSection] = useState(null)
+
+
 
   useEffect(() => {
     setSection(sections[activeSection] || <Homesection />);
+
   }, [activeSection]);
 
   return (

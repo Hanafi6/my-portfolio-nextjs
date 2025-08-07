@@ -1,12 +1,7 @@
-"use client";
-import useNavStore from "@/zustand/navStore";
-
 export default function MainContent({ children }) {
-    const { activeSection } = useNavStore();
-
-    return (
-        <div className=" relative top-[2rem] p-4 bg-blue-500">
-            {children}
-        </div>
-    );
+  return (
+    <div id="mai_content" className="  w-full px-4 md:px-8 lg:px-16 py-8">
+      {children}
+    </div>
+  );
 }

@@ -9,6 +9,7 @@ export const toogelSideBar = (set) => () => {
 
 
 export const changeSection = (set) => (newSection) => {
+    
     set((state) => ({
         activeSection: newSection,
     }));
