@@ -15,6 +15,7 @@ import {
   SiRedux,
   SiTailwindcss,
   SiNumpy,
+  SiFramer
 } from 'react-icons/si';
 
 const icons = [
@@ -28,6 +29,7 @@ const icons = [
   <SiRedux key="redux" />,
   <SiTailwindcss key="tailwind" />,
   <SiNumpy key="numpy" />,
+  <SiFramer key="SiFramer" />,
 ];
 
 export default function SkillSphere() {

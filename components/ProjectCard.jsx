@@ -1,88 +1,118 @@
-import Image from "next/image";
-import { useEffect, useState } from "react";
-import ProjectPopup from "./PopUp";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+"use client";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight, Github } from "lucide-react";
+import ProjectPopup from "./PopUp"; // استدعاء البوب أب
 
-const ProjectCard = ({ title, description, images,link }) => {
-  const [showPopup, setShowPopup] = useState(false);
+const ProjectCardImga = ({ projects }) => {
+  const [selectedProject, setSelectedProject] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // ← جديد: لتحديد الاتجاه
 
-const nextImage = () => {
-  setDirection(1); // يمين
-  setCurrentIndex((prev) => (prev + 1) % images.length);
-};
+  const openPopup = (project, index) => {
+    setSelectedProject({ ...project });
+    setCurrentIndex(index);
+  };
 
-const prevImage = () => {
-  setDirection(-1); // شمال
-  setCurrentIndex((prev) =>
-    prev === 0 ? images.length - 1 : prev - 1
+  const closePopup = () => {
+    setSelectedProject(null);
+  };
+
+  return (
+    <>
+      {projects.map((project) => (
+        <ImageSliderCard
+          key={project.id}
+          project={project}
+          openPopup={openPopup}
+        />
+      ))}
+
+      {/* عرض البوب أب لو فيه مشروع محدد */}
+      {selectedProject && (
+        <ProjectPopup
+          project={selectedProject}
+          currentIndex={currentIndex}
+          setCurrentIndex={setCurrentIndex}
+          closePopup={closePopup}
+        />
+      )}
+    </>
   );
 };
 
-  const openPopup = (index) => {
-    setCurrentIndex(index);
-    setShowPopup(prev => !prev);
-    
+const ImageSliderCard = ({ project, openPopup }) => {
+  const [current, setCurrent] = useState(0);
+
+  const nextImage = () => {
+    setCurrent((prev) => (prev + 1) % project.images.length);
   };
 
-  
-    useEffect(() => {
-    },[currentIndex,showPopup])
+  const prevImage = () => {
+    setCurrent((prev) =>
+      prev === 0 ? project.images.length - 1 : prev - 1
+    );
+  };
 
   return (
-    <div className="bg-[#11101b] rounded-2xl text-[#fff] shadow-lg p-[15px] flex flex-col items-center">
-      <h2 className="text-xl font-bold mb-2 text-center">{title}</h2>
+    <div className="bg-white rounded-lg shadow-md overflow-hidden relative">
+      {/* Container للصور */}
       <div
-        className=" cursor-pointer flex flex-row justify-around align-middle overflow-hidden rounded-xl"
-        onClick={(e) => {
-          openPopup(currentIndex)
-        }}
-        >
-        <span><ArrowLeft onClick={e => {
-          e.stopPropagation();
-          prevImage()}} className="hover:text-red-500 duration-300"/></span>
+        className="relative w-full h-56 overflow-hidden cursor-pointer"
+        onClick={() => openPopup(project, current)}
+      >
         <AnimatePresence mode="wait">
-        <motion.div
-          key={images[currentIndex]} // لازم مفتاح يتغير مع الصورة
-          initial={{ x: direction === 1 ? 300 : -300, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: direction === 1 ? -300 : 300, opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="w-[80%] flex justify-center"
-        >
-          <Image
-            src={images[currentIndex]}
-            alt={title}
-            width={250}
-            height={500}
-            className="object-cover rounded-xl w-[80%] transition-transform duration-300 hover:scale-105"
+          <h3 className="text-lg font-bold text-center text-black mb-2">
+            {project.title}
+          </h3>
+          <motion.img
+            key={project.images[current]}
+            src={project.images[current]}
+            alt={`${project.title} - ${current + 1}`}
+            className="w-full h-56 object-cover"
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.3 }}
           />
-        </motion.div>
-      </AnimatePresence>
-      <span><ArrowRight onClick={e => {
-        e.stopPropagation();
-        nextImage();}} className="hover:text-blue-500 duration-300"/></span>
+        </AnimatePresence>
+
+        {/* أزرار التنقل */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            prevImage();
+          }}
+          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition"
+        >
+          <ChevronLeft size={20} />
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            nextImage();
+          }}
+          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition"
+        >
+          <ChevronRight size={20} />
+        </button>
       </div>
 
-      <p className="text-sm text-[#fff] mt-3 p-5 text-center">{description.slice(0,20)}...</p>
-
-    {showPopup && (
-      <AnimatePresence>
-          <ProjectPopup
-          key='popup'
-            images={images}
-            project={{ title, description, link, images }}
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-            closePopup={() => setShowPopup(false)}
-            />
-      </AnimatePresence>
-    )}
-
+      {/* بيانات المشروع */}
+      <div className="p-[40px] flex justify-evenly gap-1.5">
+        <p className="text-sm text-gray-600 mb-3">
+          {project.description.slice(0, 15)}...
+        </p>
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block text-blue-600 hover:underline text-sm"
+        >
+          <Github className="bg-white rounded-full px-1 py-1 text-black" />
+        </a>
+      </div>
     </div>
   );
 };
 
-export default ProjectCard;
+export default ProjectCardImga;

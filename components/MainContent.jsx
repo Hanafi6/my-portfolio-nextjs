@@ -1,6 +1,9 @@
 export default function MainContent({ children }) {
   return (
-    <div id="mai_content" className="  w-full px-4 md:px-8 lg:px-16 py-8">
+    <div
+      id="mai_content"
+      className="w-full px-4 md:px-8 lg:px-16 py-8 pb-20 " // ✅ pb-20 عشان الفوتر
+    >
       {children}
     </div>
   );

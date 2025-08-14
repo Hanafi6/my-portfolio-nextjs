@@ -1,15 +1,18 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { changeSection, toogelSideBar } from "./navFunctions";
+import { changeLocalSection, changeSection, toogelSideBar } from "./navFunctions";
 
 const useNavStore = create(
   persist(
     (set, get) => ({
       sidebar: false,
       activeSection: "home",
+      localSec:'img',
       hasHydrated: false, // ← دي بتقول هل البيانات اتحملت من localStorage ولا لأ
+      
 
       changeSection: changeSection(set),
+      changeLocalSection: changeLocalSection(set),
       toogelSideBar: toogelSideBar(set),
     }),
     {

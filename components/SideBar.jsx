@@ -57,7 +57,7 @@ export default function Sidebar() {
                         animate={{ width: "320px", height: "100vh", x: 0, y: 0 }}
                         exit={{ width: 0, height: 0, x: -100, y: 100 }}
                         transition={{ type: "spring", duration: 0.6 }}
-                        className="fixed left-0 top-0 z-50 bg-gradient-to-t from-purple-100 via-indigo-700 to-slate-900 text-white shadow-xl overflow-hidden"
+                        className="fixed left-0 top-0  z-[9999] bg-gradient-to-t from-purple-100 via-indigo-700 to-slate-900 text-white shadow-xl overflow-hidden"
                     >
                         <SideBarContent
                             active={active}

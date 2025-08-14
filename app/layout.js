@@ -24,20 +24,22 @@ export const metadata = {
     { rel: "icon", sizes: "96x96", url: "/favicon_io/favicon-96x96.png" },
   ],
 };
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        // className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-b from-[#0b1220] via-[#110f22] to-[#1a1c2c] min-h-screen flex flex-col w-full bg-green-600`}
-        className={`${geistSans.variable} ${geistMono.variable} antialiased absolute left-0 right-0 bg-gradient-to-b from-[#0b1220] via-[#110f22] to-[#1a1c2c] min-h-screen flex flex-col w-full bg-green-600`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased 
+          bg-gradient-to-b from-[#0b1220] via-[#110f22] to-[#1a1c2c] 
+          min-h-screen flex flex-col w-full`}
       >
         <NavBar />
-          <main className="flex-grow">
-            {children}
-          </main>
+        
+        <main className="flex-grow w-full px-4 sm:px-6 lg:px-8 max-w-[1440px] mx-auto ">
+          {children}
+        </main>
+        
         <Footer />
       </body>
-    </html >
+    </html>
   );
 }
