@@ -5,7 +5,7 @@ function SideBarContent({ toogelSideBar, changeSection, activeSection, links, ac
   return (
     <>
       <div className="p-4 flex justify-between items-center border-b border-white/20">
-        <h2 className="text-xl font-bold tracking-wide">My Portfolio</h2>
+        <h2 className="text-xl font-bold tracking-wide">Lacheu7</h2>
         <button onClick={toogelSideBar} aria-label="Close Sidebar">
           <X size={26} className="text-white hover:text-red-400 transition" />
         </button>
