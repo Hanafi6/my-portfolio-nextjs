@@ -7,23 +7,23 @@ import Image from 'next/image';
 
 export default function NavBar() {
 
-  const {StateOfSideBar,ChangeStateOfSideBar} = useSideBar()
+  const { StateOfSideBar, ChangeStateOfSideBar } = useSideBar()
 
-  const { activeTab:activeLink, setActiveTab } = useModalStore();
+  const { activeTab: activeLink, setActiveTab } = useModalStore();
 
   const handleOpenSideBar = () => {
     // ChangeStateOfSideBar(!StateOfSideBar)
   };
 
   useEffect(() => {
-  },[StateOfSideBar])
+  }, [StateOfSideBar])
 
   const links = ["Home", "Projects", "Skills", "Contact"];
 
   return (
-    <nav className="fixed top-0 left-0 min-h-[40px] right-0 bg-[#0008497c] backdrop-blur-md text-white shadow-md z-50">
+    <nav className="fixed top-0 left-0 h-[30px] right-0 bg-[#0008497c] backdrop-blur-md text-white shadow-md z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative">
-{/* 
+        {/* 
         <div className="flex items-center gap-2 absolute right-5">
         <Link href='https://www.facebook.com/AMAag2' target="_blank">
           <Image
@@ -39,8 +39,8 @@ export default function NavBar() {
         {/* Center → Links */}
         <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-8 text-sm font-medium ">
           {links.map(link => (
-            <div 
-              key={link} 
+            <div
+              key={link}
               className="relative cursor-pointer select-none hover:text-amber-200"
               onClick={() => setActiveTab(link)}
             >
@@ -57,7 +57,7 @@ export default function NavBar() {
         </div>
 
         {/* Right → Icon */}
-        <div 
+        <div
           // onClick={handleOpenSideBar} 
           className="cursor-pointer ml-auto"
         >
@@ -68,7 +68,7 @@ export default function NavBar() {
                 initial={{ opacity: 0, rotate: -90 }}
                 animate={{ opacity: 1, rotate: 0 }}
                 exit={{ opacity: 0, rotate: 90 }}
-                transition={{ duration: 0.2 ,stiffness: 1000}}
+                transition={{ duration: 0.2, stiffness: 1000 }}
                 whileHover={{ scale: 1.2, color: 'yellow' }}
                 onClick={e => ChangeStateOfSideBar(false)}
               >

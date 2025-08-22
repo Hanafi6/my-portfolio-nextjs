@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import AboutSection from "./AboutSection";
 import StartSec from "./StartSec";
 
@@ -10,10 +9,11 @@ export default function HomePage() {
   const [spinning, setSpinning] = useState(false);
 
   return (
-    <main className="min-w-[90%] rounded  min-h-[80vh] ">
-      <StartSec/>
-  
-      {/* <AboutSection /> */}
+    <main className="relative min-w-[90%] min-h-[80vh] ">
+      <StartSec />
+      {/* إعرض هنا السكيلز تمشي ورا بعضها  خط كده بالعرض */}
+      <AboutSection />
+      {/* إعمل بقا شكل حلو لرص المعلومات الشخصيه  */}
     </main>
   );
 }

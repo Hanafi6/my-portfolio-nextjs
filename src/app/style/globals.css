@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-@import "tailwindcss/preflight"; /* بدل base */
-@import "tailwindcss/utilities"; /* بدل utilities */
+@import "tailwindcss/preflight";
+/* بدل base */
+@import "tailwindcss/utilities";
+/* بدل utilities */
 
 :root {
   --background: #ffffff;
@@ -29,13 +31,34 @@
 
 .app {
   min-height: 100vh;
-  background-color: #171259;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='169' height='169' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='100' y1='33' x2='100' y2='-3'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='100' y1='135' x2='100' y2='97'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23110e55' %3E%3Crect x='100' width='100' height='100'/%3E%3Crect y='100' width='100' height='100'/%3E%3C/g%3E%3Cg fill-opacity='1'%3E%3Cpolygon fill='url(%23a)' points='100 30 0 0 200 0'/%3E%3Cpolygon fill='url(%23b)' points='100 100 0 130 0 100 200 100 200 130'/%3E%3C/g%3E%3C/svg%3E");
-  
-  background-size: 150px 150px; /* حجم كل مربع في الباترن */
-  background-repeat: repeat;   /* خلّيها تتكرر */
-  background-position: top left;
+  background-color: #0b0024;
+
+  /* الباترن الأساسي */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='169' height='169' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='100' y1='33' x2='100' y2='-3'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='100' y1='135' x2='100' y2='97'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23110e55'%3E%3Crect x='100' width='100' height='100'/%3E%3Crect y='100' width='100' height='100'/%3E%3C/g%3E%3Cg fill-opacity='1'%3E%3Cpolygon fill='url(%23a)' points='100 30 0 0 200 0'/%3E%3Cpolygon fill='url(%23b)' points='100 100 0 130 0 100 200 100 200 130'/%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(45deg, #0b0024, #0b0030, #004e81, #00a8b4, #2657507c, #011038);
+
+  background-size: 150px 150px, 400% 400%;
+  background-repeat: repeat, no-repeat;
+  background-position: top left, center;
+
+  /* الأنيميشن هيأثر على الطبقة التانية بس */
+  animation: gradientShift 10s ease infinite alternate;
 }
+
+@keyframes gradientShift {
+  0% {
+    background-position: top left, 0% 50%;
+  }
+
+  50% {
+    background-position: top left, 100% 50%;
+  }
+
+  100% {
+    background-position: top left, 0% 50%;
+  }
+}
+
 
 
 body {

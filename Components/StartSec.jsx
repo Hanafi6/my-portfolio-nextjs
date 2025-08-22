@@ -5,21 +5,22 @@ import BioText from './BioText'
 
 function StartSec() {
   return (
-    <div className="min-h-[300px] flex flex-col sm:flex-row items-center align-bottom justify-evenly px-4 py-6 ">
-      
+    <div className="min-h-[100vh] flex flex-col sm:flex-row items-center justify-evenly px-4 py-6">
+
       {/* الصورة */}
-      <div className="relative w-[400px] h-[400px] flex items-center justify-center rounded-full">
+      <div className="relative w-[220px] h-[220px] rounded-full overflow-hidden">
+        {/* الصورة نفسها */}
         <Image
-          src="/images/HomePage.png"
+          src="/images/face.png"
           alt="Profile"
           fill
-          className="object-contain rounded-full"
+          className="object-cover rounded-full"
           priority
         />
+        {/* الفلتر المتدرج */}
       </div>
-
       {/* النص */}
-     <BioText />
+      <BioText />
     </div>
   )
 }
