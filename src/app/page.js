@@ -1,21 +1,18 @@
 'use client'
 
 import { useEffect } from "react";
-import HomePage from "../../Components/Home";
-import Contact from "../../Components/Contact";
-import ProjectCardImga from "../../Components/ProjectCard";
-import Projects from "../../Components/Projects.jsx";
 import Sidebar from "../../Components/SightBar";
 import RenderContent from '../../Components/RenderContent.jsx';
+import { UseRider } from "../../zustand/ModalStore";
+import HoverWatcher from "../../Components/Wacher";
 
 export default function Home() {
-    return (
-      <main className="min-h-screen flex flex-col items-center justify-center">
-        <Sidebar/>
 
+    return (
+      <main className="min-h-[90vh] flex flex-col relative top-[2rem] ">
+        <HoverWatcher />
+        <Sidebar/>
         <RenderContent />
-        {/* <ProjectCardImga /> */}
-        {/* <Projects /> */}
       </main>
     );
 }

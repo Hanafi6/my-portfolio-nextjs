@@ -1,9 +1,8 @@
+
 import { Geist, Geist_Mono } from "next/font/google";
 import Footer from "../../Components/Footer";
 import NavBar from "../../Components/NavBar";
 import "./style/globals.css";
-
-
 
 
 
@@ -17,7 +16,10 @@ export const metadata = {
     { rel: "icon", sizes: "96x96", url: "/favicon_io/favicon-96x96.png" },
   ],
 };
+
 export default function RootLayout({ children }) {
+
+
   return (
     <html lang="en">
       <body className="app flex flex-col min-h-screen">

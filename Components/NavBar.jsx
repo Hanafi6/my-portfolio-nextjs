@@ -2,8 +2,7 @@
 import { Link, Menu, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect } from 'react';
-import { useModalStore, useSideBar } from '../zustand/ModalStore';
-import Image from 'next/image';
+import { useHoverTitle, useModalStore, useSideBar } from '../zustand/ModalStore';
 
 export default function NavBar() {
 
@@ -23,24 +22,13 @@ export default function NavBar() {
   return (
     <nav className="fixed top-0 left-0 h-[30px] right-0 bg-[#0008497c] backdrop-blur-md text-white shadow-md z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative">
-        {/* 
-        <div className="flex items-center gap-2 absolute right-5">
-        <Link href='https://www.facebook.com/AMAag2' target="_blank">
-          <Image
-            src="/favicon_io/apple-touch-icon.png" // ضع الصورة هنا في مجلد public
-            alt="Logo"
-            width={20}
-            height={20}
-            className="cursor-pointer rounded-full"
-          />
-          </Link>
-      </div> */}
 
         {/* Center → Links */}
         <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-8 text-sm font-medium ">
           {links.map(link => (
             <div
               key={link}
+              data-title="Click On"
               className="relative cursor-pointer select-none hover:text-amber-200"
               onClick={() => setActiveTab(link)}
             >
@@ -72,7 +60,9 @@ export default function NavBar() {
                 whileHover={{ scale: 1.2, color: 'yellow' }}
                 onClick={e => ChangeStateOfSideBar(false)}
               >
-                <X className="w-7 h-7" />
+                <X className="w-7 h-7"  
+                initial={{ opacity: 0, rotate: -90 }}
+                />
               </motion.div>
             ) : (
               <motion.div
@@ -85,7 +75,7 @@ export default function NavBar() {
                 onClick={e => ChangeStateOfSideBar(true)}
 
               >
-                <Menu className="w-7 h-7" />
+                <Menu className="w-7 h-7" data-title="Open Menu" />
               </motion.div>
             )}
           </AnimatePresence>

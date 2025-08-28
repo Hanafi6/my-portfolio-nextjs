@@ -1,4 +1,5 @@
 import React from 'react'
+import Rider from './Rider'
 
 function Footer() {
   return (
@@ -17,10 +18,8 @@ function Footer() {
       </span>
 
       {/* اللينكات */}
-      <div className="flex gap-4 text-xs sm:text-sm font-medium">
-        <a href="#" className="hover:text-yellow-300 transition-colors">About</a>
-        <a href="#" className="hover:text-yellow-300 transition-colors">Contact</a>
-        <a href="#" className="hover:text-yellow-300 transition-colors">Privacy</a>
+      <div  className="flex gap-4 text-xs sm:text-sm font-medium">
+          <Rider/>
       </div>
     </footer>
   )

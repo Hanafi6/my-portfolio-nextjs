@@ -2,119 +2,128 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Github } from "lucide-react";
-import ProjectPopup from "./ProjectPopup"; // استدعاء البوب أب
+import ProjectPopup from "./ProjectPopup";
 
-const ProjectCardImga = ({ projects }) => {
-  const [selectedProject, setSelectedProject] = useState(null);
+const ProjectCardImga = ({ title, description, images = [], reels = [], link = "#" }) => {
+  const safeImages = Array.isArray(images) ? images.filter(Boolean) : [];
+  const hasImages = safeImages.length > 0;
+
+  const [selected, setSelected] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const openPopup = (project, index) => {
-    setSelectedProject({ ...project });
-    setCurrentIndex(index);
-  };
-
-  const closePopup = () => {
-    setSelectedProject(null);
-  };
-
-  return (
-    <>
-      {projects.map((project) => (
-        <ImageSliderCard
-          key={project.id}
-          project={project}
-          openPopup={openPopup}
-        />
-      ))}
-
-      {/* عرض البوب أب لو فيه مشروع محدد */}
-      {selectedProject && (
-        <ProjectPopup
-          project={selectedProject}
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-          closePopup={closePopup}
-        />
-      )}
-    </>
-  );
-};
-const ImageSliderCard = ({ project, openPopup }) => {
-  const [current, setCurrent] = useState(0);
-
   const nextImage = () => {
-    setCurrent((prev) => (prev + 1) % project.images.length);
+    if (safeImages.length < 2) return;
+    setCurrentIndex((prev) => (prev + 1) % safeImages.length);
   };
 
   const prevImage = () => {
-    setCurrent((prev) =>
-      prev === 0 ? project.images.length - 1 : prev - 1
-    );
+    if (safeImages.length < 2) return;
+    setCurrentIndex((prev) => (prev === 0 ? safeImages.length - 1 : prev - 1));
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden flex flex-col h-full">
-      {/* عنوان المشروع */}
-      <h3 className="text-lg font-bold text-center text-black py-3">
-        {project.title}
-      </h3>
+    // <>
+    //   {/* 🔥 الكارد */}
+    //   <div className="relative p-[2px] rounded-2xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 animate-gradient-x shadow-xl w-full h-auto">
+    //     <div className="bg-zinc-900 rounded-2xl flex flex-col overflow-hidden hover:shadow-2xl hover:scale-[1.02] transition-all duration-300 h-full">
+          
+    //       {/* عنوان */}
+    //       <h3 className="text-base sm:text-lg md:text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 text-center py-3 sm:py-4 px-2">
+    //         {title || "Untitled Project"}
+    //       </h3>
 
-      {/* الصور */}
-      <div
-        className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer"
-        onClick={() => openPopup(project, current)}
-      >
-        <AnimatePresence mode="wait">
-          <motion.img
-            key={project.images[current]}
-            src={project.images[current]}
-            alt={`${project.title} - ${current + 1}`}
-            className="w-full h-full object-cover"
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          />
-        </AnimatePresence>
+    //       {/* الصور */}
+    //       <div
+    //         className={`relative w-full aspect-[4/3] overflow-hidden ${
+    //           hasImages ? "cursor-pointer" : "bg-gray-800 grid place-items-center"
+    //         }`}
+    //         onClick={() => hasImages && setSelected(true)}
+    //       >
+    //         {hasImages ? (
+    //           <AnimatePresence mode="wait">
+    //             <motion.img
+    //               key={safeImages[currentIndex]}
+    //               src={safeImages[currentIndex]}
+    //               alt={`${title || "project"} - ${currentIndex + 1}`}
+    //               className="w-full h-full object-cover"
+    //               initial={{ opacity: 0, scale: 1.1 }}
+    //               animate={{ opacity: 1, scale: 1 }}
+    //               exit={{ opacity: 0, scale: 0.95 }}
+    //               transition={{ duration: 0.4 }}
+    //             />
+    //           </AnimatePresence>
+    //         ) : (
+    //           <div className="text-gray-400 text-sm">No images available</div>
+    //         )}
 
-        {/* أزرار التنقل */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            prevImage();
-          }}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition"
-        >
-          <ChevronLeft size={20} />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            nextImage();
-          }}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/40 text-white p-2 rounded-full hover:bg-black/60 transition"
-        >
-          <ChevronRight size={20} />
-        </button>
-      </div>
+    //         {/* أزرار التنقل */}
+    //         {hasImages && safeImages.length > 1 && (
+    //           <>
+    //             <button
+    //               onClick={(e) => {
+    //                 e.stopPropagation();
+    //                 prevImage();
+    //               }}
+    //               className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-purple-600 to-pink-600 p-1.5 sm:p-2 rounded-full text-white hover:scale-110 transition-transform shadow-lg"
+    //             >
+    //               <ChevronLeft size={18} className="sm:w-5 sm:h-5" />
+    //             </button>
+    //             <button
+    //               onClick={(e) => {
+    //                 e.stopPropagation();
+    //                 nextImage();
+    //               }}
+    //               className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 bg-gradient-to-r from-cyan-500 to-blue-600 p-1.5 sm:p-2 rounded-full text-white hover:scale-110 transition-transform shadow-lg"
+    //             >
+    //               <ChevronRight size={18} className="sm:w-5 sm:h-5" />
+    //             </button>
+    //           </>
+    //         )}
+    //       </div>
 
-      {/* بيانات المشروع */}
-      <div className="p-4 mt-auto flex justify-between items-center">
-        <p className="text-sm text-gray-600 line-clamp-2">
-          {project.description}
-        </p>
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-8 h-8 bg-gray-200 rounded-full hover:bg-gray-300 transition"
-        >
-          <Github className="text-black" />
-        </a>
-      </div>
-    </div>
+    //       {/* الوصف + اللينك */}
+    //       <div className="p-3 sm:p-4 mt-auto flex items-center gap-3">
+    //         <p className="text-xs sm:text-sm text-gray-300 line-clamp-2 flex-1">
+    //           {description || "No description provided."}
+    //         </p>
+    //         <a
+    //           href={link}
+    //           target="_blank"
+    //           rel="noopener noreferrer"
+    //           className="inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 rounded-full hover:scale-110 transition-transform shadow-md"
+    //         >
+    //           <Github className="text-white w-4 h-4 sm:w-5 sm:h-5" />
+    //         </a>
+    //       </div>
+    //     </div>
+    //   </div>
+
+    //   {/* البوب أب */}
+    // </>
+       <div
+            className={`relative aspect-[4/3] overflow-hidden ${
+              hasImages ? "cursor-pointer" : "bg-gray-800 grid place-items-center"
+            }`}
+            onClick={() => hasImages && setSelected(true)}
+          >
+            {hasImages ? (
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={safeImages[currentIndex]}
+                  src={safeImages[currentIndex]}
+                  alt={`${title || "project"} - ${currentIndex + 1}`}
+                  className="w-full h-full object-cover"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.4 }}
+                />
+              </AnimatePresence>
+            ) : (
+              <div className="text-gray-400 text-sm">No images available</div>
+            )}
+        </div>
   );
 };
-
 
 export default ProjectCardImga;

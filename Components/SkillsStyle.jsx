@@ -18,6 +18,8 @@ import {
 } from "react-icons/si";
 import { MdMobileFriendly } from "react-icons/md";
 
+//  من أول ال 499 px التصميم بيبوظ
+
 export default function SkillsStyle() {
     const [selectedSkill, setSelectedSkill] = useState(null);
 
@@ -40,16 +42,17 @@ export default function SkillsStyle() {
 
     return (
         <div
-            className="flex flex-col items-center justify-center w-full min-h-screen p-6 gap-10 "
+            className="flex flex-col items-center justify-center w-full min-h-screen gap-10 "
             onClick={() => setSelectedSkill(null)}
         >
             <div
-                className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 w-full max-w-5xl"
+                className="grid grid-cols-2 [@media(min-width:470px)]:grid-cols-3 sm:grid-cols-3 md:grid-cols-4 gap-6 w-full max-w-5xl"
                 onClick={(e) => e.stopPropagation()} // عشان مايقفلش لو دوست جوه
             >
                 {icons.map((skill, index) => (
                     <div
                         key={index}
+                        data-title={` Click On`}
                         onClick={() =>
                             setSelectedSkill(
                                 skill.name === selectedSkill?.name ? null : skill
@@ -59,9 +62,9 @@ export default function SkillsStyle() {
               flex flex-col items-center justify-center p-6 rounded-2xl cursor-pointer 
               transition-all duration-300
               ${selectedSkill && selectedSkill.name !== skill.name
-                                ? "blur-sm opacity-50 scale-95"
-                                : "hover:scale-105"
-                            }
+                    ? "blur-sm opacity-50 scale-95"
+                    : "hover:scale-105"
+                        }
               bg-gradient-to-br from-[#0b0030] via-[#004e81] to-[#00a8b4]
               text-white shadow-[0_0_15px_rgba(0,200,255,0.4)] 
               hover:shadow-[0_0_35px_rgba(0,255,255,0.9)]

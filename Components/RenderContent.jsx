@@ -40,7 +40,7 @@ function RenderContent() {
   }, [activeTab]);
 
   return (
-    <div className=' w-full h-full flex items-center justify-center overflow-hidden'>
+    <div className=' flex w-full  justify-center'>
       <AnimatePresence mode="wait">
         {render && (
           <motion.div
@@ -49,7 +49,7 @@ function RenderContent() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -30, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 1000, damping: 30 }}
-            className="w-full h-full flex items-center justify-center"
+            // className="w-full h-full flex items-center justify-center"
           >
             {render}
           </motion.div>

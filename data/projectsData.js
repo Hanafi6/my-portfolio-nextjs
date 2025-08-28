@@ -15,6 +15,8 @@ import {
 } from 'react-icons/si';
 
 
+
+
 // utils/getImagePaths.js
 export const getImagePaths = (projectNumber, count) => {
   return Array.from({ length: count }, (_, i) =>
@@ -59,7 +61,7 @@ export const projects = [
     id: 4,
     title: "Todo App Video",
     description: "A modern and responsive Todo App built with Next.js, Zustand for full state management, Framer Motion for animations, and JSON Server as a mock backend. Features full server/client component integr…",
-    images: getImagePaths(4, 6), 
+    images: getImagePaths(4, 5), 
     reels: getReelPaths(4, 1), 
     link: "https://github.com/Hanafi6/nextjs-zustand-todo-app.git",
   },

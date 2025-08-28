@@ -18,7 +18,7 @@ import {
   SiFramer
 } from 'react-icons/si';
 
-const icons = [
+export const icons = [
   <FaHtml5 key="html" />,
   <FaCss3Alt key="css" />,
   <FaJs key="js" />,
@@ -34,7 +34,7 @@ const icons = [
 
 export default function SkillSphere() {
   return (
-    <div className="flex justify-center items-center min-h-screen pt-24">
+    <div data-title="hover It" className="flex justify-center items-center min-h-screen pt-24">
       <TagSphere
         tags={icons}
         radius={200}

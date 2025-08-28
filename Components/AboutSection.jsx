@@ -24,7 +24,7 @@ const aboutCards = [
 export default function AboutSection() {
   return (
     <section
-      className="w-full sm:px-6 md:px-12 min-h-[500px] bg-red-600 flex items-center justify-center"
+      className="w-full sm:px-6 md:px-12 min-h-[500px]  flex items-center justify-center"
     >
 
 
