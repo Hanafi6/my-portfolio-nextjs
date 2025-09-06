@@ -10,12 +10,11 @@ export default function HomePage() {
   const [spinning, setSpinning] = useState(false);
 
   return (
-    <main className="relative min-w-[90%] min-h-[80vh] ">
+    <main className="flex justify-center items-center flex-col w-[100vw]">
       <StartSec />
       {/* إعرض هنا السكيلز تمشي ورا بعضها  خط كده بالعرض */}
       <OrpitSec/>
       <AboutSection />
-      {/* إعمل بقا شكل حلو لرص المعلومات الشخصيه  */}
     </main>
   );
 }

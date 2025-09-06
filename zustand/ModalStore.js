@@ -1,10 +1,33 @@
 // modalStore.js
 import { create } from 'zustand'
-import {projects} from '../data/projectsData'
 
-const useProductModal = create((set) => ({
+// ModalStore.js
+export const useProductModal = create((set, get) => ({
   isOpen: false,
-}))
+  currentIndex: 0,
+
+  open: (index = 0) => set({ isOpen: true, currentIndex: index }),
+  close: () => set({ isOpen: false }),
+  toggle: () => set({ isOpen: !get().isOpen }),
+
+  // يقبل رقم أو دالة updater
+  setCurrentIndex: (updater) =>
+    set((state) => ({
+      currentIndex:
+        typeof updater === "function" ? updater(state.currentIndex) : updater,
+    })),
+
+  nextImage: (length) => {
+    const current = get().currentIndex;
+    set({ currentIndex: (current + 1) % length });
+  },
+  prevImage: (length) => {
+    const current = get().currentIndex;
+    set({ currentIndex: (current - 1 + length) % length });
+  },
+}));
+
+
 
 export const useModalStore = create((set) => ({
   activeTab: 'Home',
@@ -23,15 +46,11 @@ export const useHoverTitle = create((set) => ({
   setTitle: (text) => set({ title: text }),
   clearTitle: () => set({ title: null }),
 }));
-  
 
 
 export const useProjectStore = create((set) => ({
-  projectes:null,
-  activeImge:0,
-  activeProject:0,
-  setActiveImge:(id) => set({activeImge:id}),
-  setActiveProject:(id) => set({activeProject:id})
+  activeProject: null,
+  setActiveProject: (project) => set({ activeProject: project }),
 }));
 
 // export default useProductModal;

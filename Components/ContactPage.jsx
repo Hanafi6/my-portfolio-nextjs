@@ -1,8 +1,14 @@
-// src/app/Routs/contact/page.tsx
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { FaEnvelope, FaGithub, FaLinkedin, FaPhoneAlt, FaFacebook } from 'react-icons/fa';
+import {
+  FaEnvelope,
+  FaGithub,
+  FaLinkedin,
+  FaPhoneAlt,
+  FaFacebook,
+} from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const contactItems = [
   {
@@ -47,13 +53,23 @@ export default function ContactPage() {
   const contRef = useRef();
 
   const QRCodeSection = (e) => (
-    <div className="flex flex-col items-center gap-4 mt-6 min-h-[300px]">
+    <motion.div
+      className="flex flex-col items-center gap-4 mt-6 min-h-[300px]"
+      initial={{ opacity: 0, y: 40 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 40 }}
+      transition={{ duration: 0.4 }}
+    >
       <h2 className="text-xl font-semibold">{e.label}</h2>
-      <div className="w-[150px] h-[150px] bg-white dark:bg-gray-800 rounded-md flex items-center justify-center overflow-hidden shadow-lg">
-        <img src={e.image} alt="QR Code" className="w-full h-full object-contain" />
+      <div className="w-[160px] h-[160px] bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden shadow-xl border-4 border-cyan-500 shadow-cyan-500/50">
+        <img
+          src={e.image}
+          alt="QR Code"
+          className="w-full h-full object-contain"
+        />
       </div>
-      <p className="text-sm text-gray-500">امسح الكود للوصول المباشر</p>
-    </div>
+      <p className="text-sm text-gray-400">امسح الكود للوصول المباشر</p>
+    </motion.div>
   );
 
   useEffect(() => {
@@ -83,31 +99,44 @@ export default function ContactPage() {
   return (
     <div
       title="altKey+click"
-      className="min-h-screen py-12 px-4 container mx-auto text-center flex flex-col items-center justify-start"
+      className="min-h-screen w-full px-6 py-16 container mx-auto text-center flex flex-col items-center justify-start"
     >
-      <h1 className="text-3xl font-bold mb-10">تواصل معايا</h1>
+      {/* <h1 className="text-4xl font-bold mb-14 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-500 animate-pulse">
+        تواصل معايا ✨
+      </h1> */}
 
-      <div ref={contRef} className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-20">
+      {/* GRID */}
+      <div
+        ref={contRef}
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 w-full max-w-6xl"
+      >
         {contactItems.map((item, idx) => (
-          <a
+          <motion.a
             key={idx}
-            title="altKey+click"
             onClick={(e) => handleShowQR(e, item)}
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-col items-center justify-center border rounded-lg p-6 shadow-md hover:shadow-xl transition-all duration-300 bg-white dark:bg-neutral-900 dark:text-white"
+            data-title='alt + click'
+            className="group flex flex-col items-center justify-center border rounded-2xl p-8 shadow-lg bg-neutral-900/80 dark:bg-neutral-900 text-white backdrop-blur-lg transition-all duration-300 hover:shadow-cyan-500/40 hover:border-cyan-400 hover:scale-[1.05]"
+            whileHover={{ y: -6 }}
           >
-            <div className="mb-2 text-blue-600">{item.icon}</div>
-            <p className="font-semibold">{item.label}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 break-words text-center">
+            <div className="mb-3 
+             text-cyan-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]">
+              {item.icon}
+            </div>
+            <p className="font-semibold text-lg">{item.label}</p>
+            <p className="text-sm text-gray-400 break-words text-center mt-2">
               {item.value}
             </p>
-          </a>
+          </motion.a>
         ))}
       </div>
 
-      {selectedQR && QRCodeSection(selectedQR)}
+      {/* QR POPUP */}
+      <AnimatePresence>
+        {selectedQR && QRCodeSection(selectedQR)}
+      </AnimatePresence>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 import { motion, AnimatePresence } from "framer-motion";
-import { useSideBar } from "../zustand/ModalStore";
+import { useModalStore, useSideBar } from "../zustand/ModalStore";
 import { useEffect, useState } from "react";
 
 // Hook علشان نعرف حجم الشاشة
@@ -20,8 +20,18 @@ function useMediaQuery(query) {
   return matches;
 }
 
+
+const sections = [
+  { id: "home", label: "Home" },
+  { id: "projects", label: "Projects" },
+  { id: "skills", label: "Skills" },
+  { id: "contact", label: "Contact" },
+]
+
 export default function Sidebar() {
   const { StateOfSideBar, ChangeStateOfSideBar } = useSideBar();
+    const { activeTab, setActiveTab } = useModalStore();
+  
   const isDesktop = useMediaQuery("(min-width: 768px)"); // من أول 768px
 
   return (
@@ -44,30 +54,43 @@ export default function Sidebar() {
             // ✅ Sidebar عالجنب (للشاشات الكبيرة)
             <motion.div
               key="sidebar"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
+              initial={{ x: "-100%", scale: 0 }}
+              animate={{ x: 0, scale: 1 }}
+              exit={{ x: "-100%", scale: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
-              className="fixed top-0 left-0 h-full w-[250px] sm:w-[300px] md:w-[350px] 
+              className="fixed top-50 max-h-[500px] left-0 bottom-50 rounded-2xl w-[250px] sm:w-[300px] md:w-[350px] 
                          bg-gradient-to-br from-[#3afdb3] via-[#0c0042] to-[#1a1a2e]
                          shadow-2xl border-r-4 border-[#3afdb3] z-50
                          flex flex-col p-6"
             >
               <h2 className="text-white text-lg font-bold mb-6">Sidebar</h2>
               <nav className="flex flex-col gap-4 text-white">
-                <a href="#" className="hover:text-[#3afdb3]">Home</a>
-                <a href="#" className="hover:text-[#3afdb3]">Projects</a>
-                <a href="#" className="hover:text-[#3afdb3]">Skills</a>
-                <a href="#" className="hover:text-[#3afdb3]">Contact</a>
+                {sections.map((section) => (
+                  <motion.span
+                    key={section.id}
+                    whileHover={{ color: "#3afdb3", borderBottom: '2px solid #3afdb3', width: "100%" }}
+                    initial={{ width: 'fit-content' }}
+                    data-title="click on"
+                    // className="hover:text-[#3afdb3]  duration-200  cursor-pointer select-none"
+                    className={`cursor-pointer select-none ${activeTab === section.label ? 'text-[#3afdb3] border-b-2 border-[#3afdb3]' : ''}`}
+                    onClick={() => {
+                      setActiveTab(section.label);
+                      ChangeStateOfSideBar(false);
+                    }}
+                  >
+                    {section.label}
+
+                  </motion.span>
+                ))}
               </nav>
             </motion.div>
           ) : (
             // ✅ Bottom Sheet (للشاشات الصغيرة)
             <motion.div
               key="bottom-sheet"
-              initial={{ y: "100%" }}
-              animate={{ y: 0 }}
-              exit={{ y: "100%" }}
+              initial={{ y: "100%", scale: 0 }}
+              animate={{ y: 0, scale: 1 }}
+              exit={{ y: "100%", scale: 0 }}
               transition={{ type: "spring", stiffness: 200, damping: 25 }}
               className="fixed bottom-0 left-0 right-0 h-[55%] 
                          bg-gradient-to-t from-[#0c0042] to-[#1a1a2e]
@@ -76,10 +99,19 @@ export default function Sidebar() {
             >
               <h2 className="text-white text-xl font-bold mb-6">Menu</h2>
               <nav className="flex flex-col gap-6 text-white text-lg">
-                <a href="#" className="hover:text-[#3afdb3]">Home</a>
-                <a href="#" className="hover:text-[#3afdb3]">Projects</a>
-                <a href="#" className="hover:text-[#3afdb3]">Skills</a>
-                <a href="#" className="hover:text-[#3afdb3]">Contact</a>
+                {sections.map((section) => (
+                  <span
+                    key={section.id}
+                    className={`cursor-pointer select-none ${activeTab === section.label ? 'text-[#3afdb3] border-b-2 border-[#3afdb3]' : ''}`}
+                    
+                    onClick={() => {
+                      setActiveTab(section.label);
+                      ChangeStateOfSideBar(false);
+                    }}
+                  >
+                    {section.label}
+                  </span>
+                ))}
               </nav>
             </motion.div>
           )}

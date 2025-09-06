@@ -4,7 +4,7 @@ import Rider from './Rider'
 function Footer() {
   return (
     <footer
-      className="fixed bottom-0 left-0 right-0
+      className="fixed bottom-0 left-0 right-0 z-41
         bg-[#0008497c] backdrop-blur-md border-t border-white/20
         text-white 
         flex flex-col items-center justify-center gap-2

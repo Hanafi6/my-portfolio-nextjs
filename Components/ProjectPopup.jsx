@@ -1,7 +1,7 @@
-import { X, ArrowLeft, ArrowRight, Github } from "lucide-react";
+import { X, ArrowLeft, ArrowRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const overlayVariants = {
   initial: { opacity: 0 },
@@ -10,9 +10,9 @@ const overlayVariants = {
 };
 
 const popupVariants = {
-  initial: { width: 0, height: 0, opacity: 0 },
-  animate: { width: "80vw", height: "80vh", opacity: 1 },
-  exit: { width: 0, height: 0, opacity: 0 },
+  initial: { scale: 0, opacity: 0 },
+  animate: { scale: 1, opacity: 1 },
+  exit: { scale: 0, opacity: 0 },
 };
 
 const imageVariants = {
@@ -30,9 +30,11 @@ const imageVariants = {
   }),
 };
 
-const ProjectPopup = ({ project, currentIndex, setCurrentIndex, closePopup }) => {
-  const images = project.images;
+const ProjectPopup = ({ project, currentIndex, setCurrentIndex, closePopup,nextImage,prevImage }) => {
+
+   const images = project.images;
   const [direction, setDirection] = useState(0);
+  const touchStartX = useRef(0);
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -41,101 +43,109 @@ const ProjectPopup = ({ project, currentIndex, setCurrentIndex, closePopup }) =>
     };
   }, []);
 
-  const handleNext = () => {
-    setDirection(1);
-    setCurrentIndex((prev) => (prev + 1) % images.length);
+const handleNext = () => {
+  setDirection(1);
+  nextImage(images.length);
+};
+
+const handlePrev = () => {
+  setDirection(-1);
+  prevImage(images.length);
+}
+  // Detect touch swipe
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  const handlePrev = () => {
-    setDirection(-1);
-    setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
+  const handleTouchEnd = (e) => {
+    const diff = e.changedTouches[0].clientX - touchStartX.current;
+    if (diff > 50) handlePrev(); // swipe right
+    if (diff < -50) handleNext(); // swipe left
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence >
       {images.length > 0 && (
-        <>
-          {/* خلفية التعتيم */}
-          <motion.div
-            className="fixed inset-0 bg-black/70 z-40"
-            variants={overlayVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            onClick={closePopup}
-          />
+        <motion.div
+          key='overLay'
+          className="fixed inset-0  max-h-[calc(100vh)] flex justify-center items-center backdrop-blur-lg bg-black/30 z-40"
+          variants={overlayVariants}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          onClick={closePopup} // الضغط على الخلفية يقفل
+        >
+            <motion.div
+              className="w-[350px] h-[calc(50vh-80px)] rounded-2xl overflow-hidden min-h-[300px] max-h-[500px] sm:w-[600px]"
+              variants={popupVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              onTouchStart={handleTouchStart}
+              onTouchEnd={handleTouchEnd}
+              key='poup'
+            >
+               <div className="relative w-full h-full flex flex-col">
+                <div className="flex-1 relative bg-black">
+                  <AnimatePresence mode="wait" custom={direction}>
+                    <motion.div
+                      key={images[currentIndex]}
+                      variants={imageVariants}
+                      custom={direction}
+                      initial="enter"
+                      animate="center"
+                      exit="exit"
+                      transition={{ duration: 0.4 }}
+                      className="absolute rounded-2xl inset-0 w-full h-full"
+                    >
+                      <Image
+                        src={images[currentIndex]}
+                        alt={`Image ${currentIndex + 1}`}
+                        fill
+                        className="object-contain"
+                      />
+                    </motion.div>
+                  </AnimatePresence>
 
-          {/* البوب أب */}
-          <motion.div
-            className="fixed top-1/2 left-1/2 z-50 bg-white rounded-xl overflow-hidden shadow-xl 
-                       w-[80vw] h-[80vh] max-w-[1000px] max-h-[800px]
-                       sm:w-[95vw] sm:h-[70vh] xs:w-[100vw] xs:h-[60vh]"
-            style={{ transform: "translate(-50%, -50%)" }}
-            variants={popupVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-          >
-            <div className="relative w-full h-full flex flex-col">
-              {/* عرض الصور */}
-              <div className="flex-1 relative">
-                <AnimatePresence mode="wait" custom={direction}>
-                  <motion.div
-                    key={images[currentIndex]}
-                    variants={imageVariants}
-                    custom={direction}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{ duration: 0.4 }}
-                    className="absolute inset-0 w-full h-full"
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrev();
+                    }}
+                    aria-label="Previous image"
+                    className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer  z-50 
+                               bg-black/50  p-2 rounded hover:bg-black/70 transition"
                   >
-                    <Image
-                      src={images[currentIndex]}
-                      alt={`Image ${currentIndex + 1}`}
-                      fill
-                      className="object-contain bg-black"
-                    />
-                  </motion.div>
-                </AnimatePresence>
+                    <ArrowLeft size={28} className="text-red-500 font-black text-2xl"/>
+                  </span>
 
-                {/* أزرار التنقل */}
-                <span
-                  onClick={handlePrev}
-                  aria-label="Previous image"
-                  className="absolute top-1/2 left-3 -translate-y-1/2 cursor-pointer text-white z-50 
-                             bg-black/50 p-2 rounded-full hover:bg-black/70 transition"
-                >
-                  <ArrowLeft size={28} />
-                </span>
+                  <span
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNext();
+                    }}
+                    aria-label="Next image"
+                    className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-white z-50 
+                               bg-black/50 p-2 rounded hover:bg-black/70 transition"
+                  >
+                    <ArrowRight size={28} className="text-blue-500 font-black text-2xl"/>
+                  </span>
 
-                <span
-                  onClick={handleNext}
-                  aria-label="Next image"
-                  className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-white z-50 
-                             bg-black/50 p-2 rounded-full hover:bg-black/70 transition"
-                >
-                  <ArrowRight size={28} />
-                </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      closePopup();
+                    }}
+                    aria-label="Close popup"
+                    className="absolute top-3 right-3 text-white z-50 bg-black/50 p-1 rounded-full hover:bg-black/70 transition"
+                  >
+                    <X size={28} className="text-red-600 font-black cursor-pointer hover:scale-[1.1] duration-200 hover:text-[#0037eb]" />
+                  </button>
+                </div>
 
-                {/* زر الإغلاق */}
-                <button
-                  onClick={closePopup}
-                  aria-label="Close popup"
-                  className="absolute top-3 right-3 text-white z-50 bg-black/50 p-1 rounded-full hover:bg-black/70 transition"
-                >
-                  <X size={28} />
-                </button>
-              </div>
-
-              {/* عرض التفاصيل */}
-              <div className="p-4 bg-white text-black overflow-y-auto max-h-[30%]">
-                <h2 className="text-lg font-bold mb-2">{project.title}</h2>
-                <p className="text-sm mb-3">{project.description}</p>
-              </div>
-            </div>
-          </motion.div>
-        </>
+              </div> 
+            </motion.div>
+        </motion.div>
       )}
     </AnimatePresence>
   );

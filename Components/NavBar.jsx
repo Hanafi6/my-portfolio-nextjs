@@ -20,16 +20,16 @@ export default function NavBar() {
   const links = ["Home", "Projects", "Skills", "Contact"];
 
   return (
-    <nav className="fixed top-0 left-0 h-[30px] right-0 bg-[#0008497c] backdrop-blur-md text-white shadow-md z-50">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3 md:py-4 relative">
+    <nav className="fixed top-0 left-0 h-[30px] right-0  bg-[#0008497c] backdrop-blur-md text-white shadow-md z-50">
+      <div className="max-w-7xl mx-auto flex items-center  px-4 py-3 md:py-4 relative">
 
         {/* Center → Links */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:flex gap-8 text-sm font-medium ">
+        <div className="absolute left-1/2 w-[70%] lg:text-3xl  sm:w-[30%] font-black lg:flex lg:justify-start  hidden md:flex gap-8 text-sm  ">
           {links.map(link => (
             <div
               key={link}
               data-title="Click On"
-              className="relative cursor-pointer select-none hover:text-amber-200"
+              className="relative cursor-pointer text-[15px] select-none hover:text-amber-200"
               onClick={() => setActiveTab(link)}
             >
               {link}
