@@ -41,7 +41,9 @@ export default function AboutSection() {
           transition={{ delay: 0.3, duration: 0.8 }}
           className="mt-6 max-w-2xl mx-auto text-gray-200 text-lg sm:text-xl leading-relaxed"
         >
-         This site is my personal site and it is made the way I like it and everything on it is mine. I hope you like it and I hope you like my projects and skills that I have presented here to improve the
+         This site is my personal site and it is made the way I like it and everything on it is mine. I hope you like it and I hope you 
+         like my projects and skills that I
+          have presented here to improve the
           user experiences with <span className="text-cyan-400">React</span> & <span className="text-cyan-400">Next.js</span>.
         </motion.p>
       </div>

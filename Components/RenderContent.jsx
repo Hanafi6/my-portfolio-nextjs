@@ -6,6 +6,7 @@ import Skills from './Skills';
 import Contact from './Contact'; // 🛑 هنا خليه كومبوننت مش أيكون
 import { useModalStore } from '../zustand/ModalStore';
 import { AnimatePresence, motion } from 'framer-motion';
+import CV from './CV';
 
 const contents = [
   {
@@ -24,10 +25,15 @@ const contents = [
     component: <Skills />,
   },
   {
-    id: 4,
-    title: "Contact",
-    component: <Contact />,
+      id: 4,
+      title: "Contact",
+      component: <Contact />,
   },
+  {
+      id: 5,
+      title: "CV",
+      component: <CV />,
+  }
 ];
 
 function RenderContent() {

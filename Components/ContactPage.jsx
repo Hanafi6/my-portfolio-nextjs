@@ -23,7 +23,7 @@ const contactItems = [
     label: 'GitHub',
     value: 'github.com/Hanafi6',
     link: 'https://github.com/Hanafi6',
-    qr: '/images/QRCode/Git Hub.png',
+    qr: '/images/QRCode/Git_Hub.png',
   },
   {
     icon: <FaLinkedin size={32} />,
@@ -41,11 +41,25 @@ const contactItems = [
   },
   {
     icon: <FaPhoneAlt size={32} />,
-    label: 'رقم الهاتف',
+    label: 'WhatsApp',
     value: '+20 1282 1538 38',
     link: 'https://wa.me/201282153838',
-    qr: '/images/QRCode/Wahtsapp.png',
+    qr: '/images/QRCode/whtsap.png',
   },
+  {
+    icon: <FaPhoneAlt size={32} />,
+    label: 'Call Me',
+    value: 'https://t.me/+201282153838',
+    link: 'tel:+201001234567',
+    qr: '/images/QRCode/callme.png',
+  },
+  {
+    icon: <FaPhoneAlt size={32} />,
+    label: 'Telegram',
+    value: '201282153838',
+    link: 'https://t.me/+201282153838',
+    qr: '/images/QRCode/callme.png',
+  }
 ];
 
 export default function ContactPage() {
@@ -101,10 +115,6 @@ export default function ContactPage() {
       title="altKey+click"
       className="min-h-screen w-full px-6 py-16 container mx-auto text-center flex flex-col items-center justify-start"
     >
-      {/* <h1 className="text-4xl font-bold mb-14 text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-500 to-purple-500 animate-pulse">
-        تواصل معايا ✨
-      </h1> */}
-
       {/* GRID */}
       <div
         ref={contRef}
@@ -117,12 +127,15 @@ export default function ContactPage() {
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            data-title='alt + click'
-            className="group flex flex-col items-center justify-center border rounded-2xl p-8 shadow-lg bg-neutral-900/80 dark:bg-neutral-900 text-white backdrop-blur-lg transition-all duration-300 hover:shadow-cyan-500/40 hover:border-cyan-400 hover:scale-[1.05]"
+            data-title="alt + click"
+            className="group flex flex-col items-center justify-center border rounded-2xl p-8 
+                       shadow-xl shadow-cyan-500/20
+                       bg-neutral-900/80 dark:bg-neutral-900 text-white backdrop-blur-lg 
+                       transition-all duration-300 
+                       hover:shadow-cyan-500/60 hover:border-cyan-400 hover:scale-[1.05]"
             whileHover={{ y: -6 }}
           >
-            <div className="mb-3 
-             text-cyan-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]">
+            <div className="mb-3 text-cyan-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(0,255,255,0.7)]">
               {item.icon}
             </div>
             <p className="font-semibold text-lg">{item.label}</p>
