@@ -67,11 +67,11 @@ export default function Home() {
       <main className="min-h-[90vh] flex flex-col relative top-[2rem] ">
         <HoverWatcher />
         <Sidebar />
+        <AnimatePresence mode="wait">
         {isOpen && (
-          <AnimatePresence>
             <ProjectPopup project={activeProject} currentIndex={currentIndex} setCurrentIndex={setCurrentIndex} nextImage={nextImage} prevImage={prevImage} closePopup={e => close()} />
+          )}
           </AnimatePresence>
-        )}
         <RenderContent />
       </main>
     );

@@ -84,13 +84,6 @@ export default function NavBar() {
             )}
           </AnimatePresence>
         </div>
-<div className="flex gap-4 items-center ml-auto">
-          <a href="https://facebook.com/" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 text-xl transition-all"><FaFacebook /></a>
-          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-blue-700 hover:text-blue-900 text-xl transition-all"><FaLinkedin /></a>
-          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="text-gray-700 hover:text-black text-xl transition-all"><FaGithub /></a>
-        </div>
-      {/* Sidebar (for mobile only) */}
-    
       </div>
     </nav>
   );

@@ -69,10 +69,10 @@ export default function ContactPage() {
   const QRCodeSection = (e) => (
     <motion.div
       className="flex flex-col items-center gap-4 mt-6 min-h-[300px]"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 40 }}
-      transition={{ duration: 0.4 }}
+      initial={{ scale: 0.8, opacity: 0, y: 40 }}
+      animate={{ scale: 1, opacity: 1, y: 0 }}
+      exit={{ scale: 0.8, opacity: 0, y: 40 }}
+      transition={{ duration: 0.1 }}
     >
       <h2 className="text-xl font-semibold">{e.label}</h2>
       <div className="w-[160px] h-[160px] bg-white dark:bg-gray-800 rounded-lg flex items-center justify-center overflow-hidden shadow-xl border-4 border-cyan-500 shadow-cyan-500/50">

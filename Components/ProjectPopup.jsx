@@ -64,7 +64,7 @@ const handlePrev = () => {
   };
 
   return (
-    <AnimatePresence >
+    < >
       {images.length > 0 && (
         <motion.div
           key='overLay'
@@ -147,7 +147,7 @@ const handlePrev = () => {
             </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 
